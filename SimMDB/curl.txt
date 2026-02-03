@@ -1,0 +1,10 @@
+curl -X POST http://localhost:8080/mdb/data   -H "Content-Type: application/json"   --data @params.json
+curl -X POST http://localhost:8080/mdb/open/COM1
+curl -X POST http://localhost:8080/mdb/start
+curl -X POST http://localhost:8080/mdb/vend/5
+curl -X POST http://localhost:8080/mdb/close
+curl http://localhost:8080/mdb/state
+
+Docker : 
+docker build -t mdb-api .
+docker run --rm -p 8080:8080 --name mdb mdb-api:latest

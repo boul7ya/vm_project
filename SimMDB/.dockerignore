@@ -1,0 +1,13 @@
+# CI/CD & scripts locaux
+Jenkinsfile
+curl.txt
+# Git
+.git
+.gitignore
+
+# IDE
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
