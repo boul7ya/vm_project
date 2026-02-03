@@ -3,11 +3,11 @@ pipeline {
 
     stages {
 
-        stage('MDB init (POST /mdb/data)') {
+        stage('MDB init') {
             steps {
-                sh '''
-                curl -X POST http://localhost:8080/mdb/data \
-                     -H "Content-Type: application/json" \
+                bat '''
+                curl -X POST http://localhost:8080/mdb/data ^
+                     -H "Content-Type: application/json" ^
                      --data @params.json
                 '''
             }
@@ -15,38 +15,38 @@ pipeline {
 
         stage('MDB open') {
             steps {
-                sh 'curl -X POST http://localhost:8080/mdb/open/COM1'
+                bat 'curl -X POST http://localhost:8080/mdb/open/COM1'
             }
         }
 
         stage('MDB start') {
             steps {
-                sh 'curl -X POST http://localhost:8080/mdb/start'
+                bat 'curl -X POST http://localhost:8080/mdb/start'
             }
         }
 
         stage('MDB vend') {
             steps {
-                sh 'curl -X POST http://localhost:8080/mdb/vend/5'
+                bat 'curl -X POST http://localhost:8080/mdb/vend/5'
             }
         }
 
         stage('MDB close') {
             steps {
-                sh 'curl -X POST http://localhost:8080/mdb/close'
+                bat 'curl -X POST http://localhost:8080/mdb/close'
             }
         }
 
         stage('MDB state') {
             steps {
-                sh 'curl http://localhost:8080/mdb/state'
+                bat 'curl http://localhost:8080/mdb/state'
             }
         }
     }
 
     post {
         always {
-            sh 'docker rm -f mdb || true'
+            bat 'docker rm -f mdb || exit 0'
         }
     }
 }
