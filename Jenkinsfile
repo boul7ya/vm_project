@@ -8,7 +8,7 @@ pipeline {
                 bat '''
                 docker rm -f mdb || exit 0
                 docker run -d -p 8080:8080 --name mdb mdb-api
-                timeout /t 5 /nobreak
+                ping 127.0.0.1 -n 6 > nul
                 '''
             }
         }
