@@ -3,6 +3,16 @@ pipeline {
 
     stages {
 
+        stage('Start MDB simulator (Docker)') {
+            steps {
+                bat '''
+                docker rm -f mdb || exit 0
+                docker run -d -p 8080:8080 --name mdb mdb-api
+                timeout /t 5 /nobreak
+                '''
+            }
+        }
+
         stage('MDB open') {
             steps {
                 bat 'curl -X POST http://localhost:8080/mdb/open/COM1'
@@ -31,6 +41,12 @@ pipeline {
             steps {
                 bat 'curl http://localhost:8080/mdb/state'
             }
+        }
+    }
+
+    post {
+        always {
+            bat 'docker rm -f mdb || exit 0'
         }
     }
 }
